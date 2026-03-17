@@ -8,6 +8,7 @@ public class SaveManager : MonoBehaviour
     private void Awake()
     {
         savePath = Application.persistentDataPath + "/player_save.json";
+        Debug.Log(savePath);
     }
 
     // Save Game
@@ -21,8 +22,12 @@ public class SaveManager : MonoBehaviour
 
         // 1. Save our data in a JSON format
         string json = JsonUtility.ToJson(data, true); // Optional 2nd argument. True makes the file readable
-        // 2. Write to a JSON file
-        File.WriteAllText(savePath, json);
+        // 1.5. byte array
+        byte[] jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);
+        // 2. base64 string
+        string encoded = System.Convert.ToBase64String(jsonBytes);
+        // 3. Write to a JSON file
+        File.WriteAllText(savePath, encoded);
         Debug.Log("Game Saved to: " + savePath);
     }
 
@@ -31,8 +36,11 @@ public class SaveManager : MonoBehaviour
     {
         if(File.Exists(savePath))
         {
-            // File exists!
-            string json = File.ReadAllText(savePath);   // Load the JSON string from savePath
+            // File exists! 
+            string encoded = File.ReadAllText(savePath);
+            byte[] jsonBytes = System.Convert.FromBase64String(encoded);
+            string json = System.Text.Encoding.UTF8.GetString(jsonBytes);
+
 
             PlayerSaveData data = JsonUtility.FromJson<PlayerSaveData>(json); // Convert the JSON string into a PlayerSaveData
             Vector3 playerData = new Vector3(data.position[0], data.position[1], data.position[2]);
