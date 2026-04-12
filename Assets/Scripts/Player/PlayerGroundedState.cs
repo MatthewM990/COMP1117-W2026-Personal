@@ -13,6 +13,11 @@ public class PlayerGroundedState : PlayerBaseState
         player.anim.SetFloat("HorizontalSpeed", Mathf.Abs(player.rBody.linearVelocityX));
 
         // TRANSITION LOGIC
+        if (player.moveInput.y < 0)
+        {
+            player.SwitchState(player.CrouchState);
+        }
+
         if(!player.CheckGrounded())
         {
             // Not on the ground!

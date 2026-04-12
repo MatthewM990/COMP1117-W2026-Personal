@@ -18,6 +18,7 @@ public class Player : Character
     public PlayerAirborneState AirborneState = new PlayerAirborneState();
     public PlayerHurtState HurtState = new PlayerHurtState();
     public PlayerDeathState DeathState = new PlayerDeathState();
+    public PlayerCrouchState CrouchState = new PlayerCrouchState();
 
     [HideInInspector] public Vector2 moveInput;
     [HideInInspector] public int jumpsRemaining;
