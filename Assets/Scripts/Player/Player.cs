@@ -19,6 +19,7 @@ public class Player : Character
     public PlayerHurtState HurtState = new PlayerHurtState();
     public PlayerDeathState DeathState = new PlayerDeathState();
     public PlayerCrouchState CrouchState = new PlayerCrouchState();
+    public PlayerDashState DashState = new PlayerDashState();
 
     [HideInInspector] public Vector2 moveInput;
     [HideInInspector] public int jumpsRemaining;
@@ -126,5 +127,10 @@ public class Player : Character
     public void SetDead(bool deadStatus)
     {
         IsDead = deadStatus;
+    }
+
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        SwitchState(DashState);
     }
 }
